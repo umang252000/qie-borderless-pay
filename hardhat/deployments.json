@@ -1,0 +1,10 @@
+{
+  "network": "qie_testnet",
+  "timestamp": 1765303453478,
+  "deployed": {
+    "ReputationScore": "0x02e04f6e008e06EC7a3E3a01Bb5491e016799260",
+    "FXEngine": "0xde21200485b6D9dEE750297A5fE63458f1e81cD6",
+    "LoanPool": "0x51A1060c276fd2A782BF640E7b8aCD5103cf41E6",
+    "PayrollEngine": "0x693de56163daA399797617a1E16421Eba3ECBaF3"
+  }
+}
