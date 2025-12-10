@@ -335,6 +335,7 @@ UML Class Diagram (Text Version)
 │ - loans: mapping        │
 
 │ - reputation: address   │
+
 ├────────────────────────┤
 
 │ + createLoan()          │
