@@ -19,11 +19,11 @@ Built for the QIE Hackathon, combining real business impact, clean architecture,
 
 Live Deployments
 Component	URL
-Frontend (Render)	https://qie-borderless-pay.onrender.com
+Frontend (Render)	https://qie-borderless-pay-2.onrender.com
 
 Backend Risk Engine (Render)	https://qie-bo.onrender.com/health
 
-Explorer (QIE Testnet)	https://testnet.qie.digital
+Explorer (QIE Testnet)	https://qie-bo.onrender.com/health
 
 Smart Contracts (QIE Testnet)	See “Contract Addresses” below
 
@@ -125,12 +125,17 @@ qie-borderless-pay/
 Smart Contracts
 
 Deployed on QIE Testnet (Chain ID: 1983)
+
 RPC: https://rpc1testnet.qie.digital
 
 Contract	Address
+
 ReputationScore	0x02e04f6e008e06EC7a3E3a01Bb5491e016799260
+
 FXEngine	0xde21200485b6D9dEE750297A5fE63458f1e81cD6
+
 LoanPool	0x51A1060c276fd2A782BF640E7b8aCD5103cf41E6
+
 PayrollEngine	0x693de56163daA399797617a1E16421Eba3ECBaF3
 
 Contracts are located in:
@@ -273,6 +278,7 @@ qie-borderless-pay/
 
 │   └── public/
 │
+
 └── hardhat/
 
     ├── contracts/
@@ -283,7 +289,7 @@ qie-borderless-pay/
     
     └── hardhat.config.ts
 
-🚀 Future Enhancements
+Future Enhancements
 
 Multi-token lending
 
@@ -299,16 +305,14 @@ Dashboard for employers & lenders
 
 Real-time FX via QIE oracle integration
 
-📄 License
+Final Note
 
-MIT License © 2025 — QIE Borderless Pay
+This project have:
 
-🎉 Final Note
-
-This project is designed to be:
-
-✔ Hackathon-winning
 ✔ Scalable
+
 ✔ Cleanly architected
+
 ✔ Fully deployable on QIE Testnet
+
 ✔ Real-world meaningful
