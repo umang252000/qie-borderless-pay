@@ -142,11 +142,55 @@ Contracts are located in:
 
 hardhat/contracts/
 
-
 Run tests:
 
 cd hardhat
 npx hardhat test
+
+Architecture Explanation
+
+
+                       ┌────────────────────────────┐
+                       │        FRONTEND (UI)        │
+                       │  React + Vite + ethers.js   │
+                       │                              │
+                       │ • Wallet Modal (QIE/MetaMask)│
+                       │ • Borrow Loan UI             │
+                       │ • Repay Loan UI              │
+                       │ • Payroll UI                 │
+                       │ • Risk Score Display         │
+                       └──────────────┬───────────────┘
+                                      │ 1. JSON-RPC Calls
+                                      ▼
+                     ┌──────────────────────────────────────┐
+                     │      QIE BLOCKCHAIN (Testnet)        │
+                     │                                               
+                     │ Smart Contracts:                            │
+                     │  • ReputationScore                          │
+                     │  • LoanPool                                 │
+                     │  • PayrollEngine                            │
+                     │  • FXEngine                                 │
+                     └──────────────┬──────────────────────────────┘
+                                    │ 2. Query On-chain Reputation
+                                    ▼
+       ┌──────────────────────────────────────────────────────────┐
+       │        BACKEND — Risk Engine API (Node + Express)        │
+       │ https://qie-bo.onrender.com                              │
+       │                                                          │
+       │ • Computes risk score (700–900)                          │
+       │ • Fetches on-chain reputation                            │
+       │ • ML/Heuristic model (expandable)                        │
+       │ • Rate limiting + logging                                │
+       └──────────────┬──────────────────────────────────────────┘
+                      │ 3. REST API (/risk/:wallet)
+                      ▼
+       ┌──────────────────────────────────────────────────────────┐
+       │                   DATABASE (Future)                       │
+       │ • Loan behavior logs                                      │
+       │ • Off-chain analytics                                     │
+       │ • Risk model training data                                │
+       └──────────────────────────────────────────────────────────┘
+
 
 Backend Risk Engine
 
@@ -249,6 +293,92 @@ PORT=4000
 
 Frontend (frontend/.env)
 VITE_BACKEND_URL=https://qie-bo.onrender.com
+
+UML Class Diagram (Text Version)
+
+
+
+┌────────────────────────┐
+│  
+    ReputationScore     │
+    
+├────────────────────────┤
+
+│ - scores: mapping       │
+
+│ - authorized: mapping   │
+
+├────────────────────────┤
+
+│ + increaseScore(addr)   │
+
+│ + decreaseScore(addr)   │
+
+│ + getScore(addr)        │
+
+
+│ + authorize(contract)   │
+
+└────────────────────────┘
+
+             ▲
+             │ (used by)
+             
+┌────────────────────────┐
+
+│        LoanPool         │
+
+├────────────────────────┤
+
+│ - loanCount             │
+
+│ - loans: mapping        │
+
+│ - reputation: address   │
+├────────────────────────┤
+
+│ + createLoan()          │
+
+│ + repay()               │
+
+│ + getLoan()             │
+
+└────────────────────────┘
+
+
+┌────────────────────────┐
+
+│        FXEngine         │
+
+├────────────────────────┤
+
+│ + convert(tokenIn,      │
+
+│           tokenOut,     │
+
+│           amount)       │
+
+└────────────────────────┘
+
+
+
+                ┌────────────────────────┐
+                │     PayrollEngine      │
+                ├────────────────────────┤
+                │ - instructionCount     │
+                │ - instructions: mapping│
+                │ - fxEngine: address    │
+                │ - owner                │
+                ├────────────────────────┤
+                │ + createInstruction()  │
+                │ + executeInstruction() │
+                │ + fundEmployer()       │
+                │ + withdraw()           │
+                └────────────────────────┘
+
+
+
+
 
 Project Structure
 qie-borderless-pay/
